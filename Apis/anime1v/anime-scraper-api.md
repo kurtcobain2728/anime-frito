@@ -1,8 +1,8 @@
-# 📺 AnimeAV1 API Reference
+#  AnimeAV1 API Reference
 
 API RESTful para obtener información de anime, enlaces de streaming y descarga de AnimeAV1.com
 
-## 🔑 Autenticación
+##  Autenticación
 
 Todos los endpoints requieren autenticación con API Key:
 
@@ -16,7 +16,7 @@ X-API-Key: tu_api_key_aqui
 2. Copia tu API Key del dashboard
 3. Úsala en todas las peticiones
 
-## 📊 Rate Limits
+##  Rate Limits
 
 | Plan | Requests/día | Descargas/día |
 |------|--------------|---------------|
@@ -26,7 +26,7 @@ X-API-Key: tu_api_key_aqui
 
 ---
 
-## 📍 Endpoints
+##  Endpoints
 
 ### 1. Información del Anime
 
@@ -311,7 +311,7 @@ curl -H "X-API-Key: YOUR_KEY" \
 
 ---
 
-## 🔴 Errores
+##  Errores
 
 ### Formato de Error
 ```json
@@ -361,7 +361,7 @@ curl -H "X-API-Key: YOUR_KEY" \
 
 ---
 
-## 📝 Notas
+##  Notas
 
 ### Mega Links
 Los enlaces de Mega están **excluidos por defecto** porque pueden mostrar un popup pidiendo la clave de descifrado en algunos navegadores. Para incluirlos, usa `&includeMega=true`.
@@ -380,7 +380,7 @@ Los enlaces de Mega están **excluidos por defecto** porque pueden mostrar un po
 
 ---
 
-## 🔗 Ver También
+##  Ver También
 
 - [Guía de Instalación](GUIA-ANIME-API.md)
 - [Información sobre Mega](MEGA-FILTER-INFO.md)
@@ -483,15 +483,15 @@ Body: {
 
 ## Características
 
-✅ Multi-sitio (animeav1.com, animeflv.net, etc.)
-✅ Extracción automática de enlaces
-✅ Descarga paralela
-✅ Sistema de cola
-✅ Webhooks para notificaciones
-✅ Rate limiting por plan
-✅ Almacenamiento temporal/permanente
-✅ Conversión de formatos (opcional)
-✅ Subtítulos automáticos
+ Multi-sitio (animeav1.com, animeflv.net, etc.)
+ Extracción automática de enlaces
+ Descarga paralela
+ Sistema de cola
+ Webhooks para notificaciones
+ Rate limiting por plan
+ Almacenamiento temporal/permanente
+ Conversión de formatos (opcional)
+ Subtítulos automáticos
 
 ## Límites por Plan
 

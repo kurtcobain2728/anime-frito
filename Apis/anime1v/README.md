@@ -1,29 +1,29 @@
-# 🎬 Anime1v API - Documentación Pública
+#  Anime1v API - Documentación Pública
 
 API REST para obtener información de animes desde AnimeAV1.com
 
-**Base URL**: `https://fxxmorgan.me/api/anime1v`
+**Base URL**: `http://localhost:3001/api/v1/anime`
 
-[![Status](https://img.shields.io/badge/status-online-success)](https://fxxmorgan.me/api/anime1v)
-[![API Version](https://img.shields.io/badge/version-1.0.0-blue)](https://fxxmorgan.me/api/anime1v)
+[![Status](https://img.shields.io/badge/status-online-success)](http://localhost:3001/api/v1/anime)
+[![API Version](https://img.shields.io/badge/version-1.0.0-blue)](http://localhost:3001/api/v1/anime)
 
 ---
 
-## 🚀 Inicio Rápido
+##  Inicio Rápido
 
 ### 1. Obtener API Key
 
-Regístrate en [https://fxxmorgan.me/api](https://fxxmorgan.me/api) para obtener tu API Key gratuita.
+Configura la variable API_KEYS en el archivo .env para tu entorno de desarrollo, o deshabilita el middleware de autenticacion si tu entorno sera privado. Open Source.
 
 ### 2. Hacer tu primera request
 
 ```bash
 curl -H "X-API-Key: tu_api_key" \
-  "https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com"
+  "http://localhost:3001/api/v1/anime/search?q=naruto&domain=animeav1.com"
 ```
 
 ```javascript
-fetch('https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com', {
+fetch('http://localhost:3001/api/v1/anime/search?q=naruto&domain=animeav1.com', {
   headers: {
     'X-API-Key': 'tu_api_key_aqui'
   }
@@ -34,7 +34,7 @@ fetch('https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com', {
 
 ---
 
-## 📋 Endpoints Disponibles
+##  Endpoints Disponibles
 
 | Endpoint | Método | Descripción |
 |----------|--------|-------------|
@@ -44,7 +44,7 @@ fetch('https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com', {
 
 ---
 
-## 📚 Documentación
+##  Documentación
 
 - **[API Reference Completa](anime-scraper-api.md)** - Todos los endpoints y parámetros
 - **[Guía de Uso](GUIA-ANIME-API.md)** - Cómo usar la API
@@ -54,7 +54,7 @@ fetch('https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com', {
 
 ---
 
-## 🔑 Autenticación
+##  Autenticación
 
 Todas las requests requieren una API Key en el header:
 
@@ -64,7 +64,7 @@ X-API-Key: tu_api_key_aqui
 
 ---
 
-## 📊 Rate Limiting
+##  Rate Limiting
 
 | Plan | Requests/Día | Precio |
 |------|-------------|--------|
@@ -74,11 +74,11 @@ X-API-Key: tu_api_key_aqui
 
 ---
 
-## 💡 Ejemplo Completo
+##  Ejemplo Completo
 
 ```javascript
 const API_KEY = 'tu_api_key';
-const BASE_URL = 'https://fxxmorgan.me/api/anime1v';
+const BASE_URL = 'http://localhost:3001/api/v1/anime';
 
 async function buscarYObtenerInfo(query) {
   // 1. Buscar
@@ -103,24 +103,24 @@ buscarYObtenerInfo('naruto');
 
 ---
 
-## ⚠️ Notas Importantes
+## ️ Notas Importantes
 
-- ✅ Mega está **excluido por defecto** (usa `includeMega=true` para incluirlo)
-- ✅ Respeta el rate limiting de tu plan
-- ✅ Las URLs de videos pueden expirar
-- ✅ Solo contenido de AnimeAV1.com
-
----
-
-## 🐛 Soporte
-
-- 📧 Email: contact@fxxmorgan.me
-- 🐛 Issues: Reporta problemas con la API
-- 📖 Docs: Lee la documentación completa
+-  Mega está **excluido por defecto** (usa `includeMega=true` para incluirlo)
+-  Respeta el rate limiting de tu plan
+-  Las URLs de videos pueden expirar
+-  Solo contenido de AnimeAV1.com
 
 ---
 
-## 📄 Licencia
+##  Soporte
+
+-  Email: contact@fxxmorgan.me
+-  Issues: Reporta problemas con la API
+-  Docs: Lee la documentación completa
+
+---
+
+##  Licencia
 
 Esta API es de uso exclusivo con API Key. El backend es propietario.
 
@@ -128,4 +128,4 @@ La documentación está bajo MIT License para referencia.
 
 ---
 
-**Powered by FxxMorgan** | [Website](https://fxxmorgan.me) | [API Portal](https://fxxmorgan.me/api)
+**Powered by FxxMorgan** | [Website](https://fxxmorgan.me) | [API Portal](https://localhost:3001)

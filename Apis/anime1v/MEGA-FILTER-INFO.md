@@ -1,4 +1,4 @@
-# 📌 Información sobre el filtro de Mega
+#  Información sobre el filtro de Mega
 
 ## ¿Por qué Mega está excluido por defecto?
 
@@ -45,12 +45,12 @@ GET /api/v1/anime/episode?url=...&excludeServers=1fichier
 
 ## Recomendaciones
 
-### ✅ Usar Mega cuando:
+###  Usar Mega cuando:
 - Descargas con herramientas CLI (wget, curl, aria2)
 - Aplicaciones que preservan el hash (#)
 - Acceso directo sin redirecciones
 
-### ❌ Evitar Mega cuando:
+###  Evitar Mega cuando:
 - Enlaces para usuarios finales en navegadores
 - Sistemas que hacen redirects
 - Integraciones que copian/pegan URLs
@@ -59,11 +59,11 @@ GET /api/v1/anime/episode?url=...&excludeServers=1fichier
 
 | Servidor | Velocidad | Fiabilidad | Notas |
 |----------|-----------|------------|-------|
-| **PDrain** | ⚡⚡⚡ | ✅ Alta | Rápido, sin limitaciones |
-| **HLS** | ⚡⚡⚡ | ✅ Alta | Streaming directo |
-| **Mega** | ⚡⚡ | ⚠️ Media | Requiere clave en hash |
-| **1Fichier** | ⚡ | ✅ Alta | Lento pero estable |
-| **MP4Upload** | ⚡⚡ | ⚠️ Media | Puede tener ads |
+| **PDrain** |  |  Alta | Rápido, sin limitaciones |
+| **HLS** |  |  Alta | Streaming directo |
+| **Mega** |  | ️ Media | Requiere clave en hash |
+| **1Fichier** |  |  Alta | Lento pero estable |
+| **MP4Upload** |  | ️ Media | Puede tener ads |
 
 ## Configuración en código
 
@@ -186,10 +186,10 @@ Esto dejará solo Mega.
 ## Cambios en versiones
 
 ### v1.0 (Actual)
-- ✅ Mega excluido por defecto
-- ✅ Parámetro `includeMega=true` para incluirlo
-- ✅ Parámetro `excludeServers` para filtrar otros
-- ✅ Funciona en streaming y descarga, SUB y DUB
+-  Mega excluido por defecto
+-  Parámetro `includeMega=true` para incluirlo
+-  Parámetro `excludeServers` para filtrar otros
+-  Funciona en streaming y descarga, SUB y DUB
 
 ### Futuro
 - Configuración de servidores preferidos por usuario

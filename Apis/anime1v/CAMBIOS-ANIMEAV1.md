@@ -1,17 +1,17 @@
-# 🎯 API de AnimeAV1 - Completamente Funcional ✅
+#  API de AnimeAV1 - Completamente Funcional 
 
-## 🎉 Estado Actual: PRODUCCIÓN
+##  Estado Actual: PRODUCCIÓN
 
 La API está **100% operativa** y lista para usar con AnimeAV1.com.
 
-## ✅ Funcionalidades Implementadas
+##  Funcionalidades Implementadas
 
 ### 1. **Extracción de Datos JSON de SvelteKit**
 AnimeAV1 usa SvelteKit con datos embebidos en JavaScript. La API:
-- ✅ Extrae datos del array `__sveltekit_*.data` usando `eval()`
-- ✅ Parsea correctamente JavaScript notation (no JSON puro)
-- ✅ Fallback automático a HTML scraping si falla
-- ✅ Retorna información completa del anime
+-  Extrae datos del array `__sveltekit_*.data` usando `eval()`
+-  Parsea correctamente JavaScript notation (no JSON puro)
+-  Fallback automático a HTML scraping si falla
+-  Retorna información completa del anime
 
 ### 2. **Información del Anime** (`/api/v1/anime/info`)
 
@@ -53,11 +53,11 @@ AnimeAV1 usa SvelteKit con datos embebidos en JavaScript. La API:
 **Endpoint:** `GET /api/v1/anime/episode?url=https://animeav1.com/media/leviathan/1`
 
 **Características:**
-- ✅ Extrae enlaces de streaming (embeds)
-- ✅ Extrae enlaces de descarga directa
-- ✅ Separa SUB y DUB automáticamente
-- ✅ **Mega excluido por defecto** (usar `&includeMega=true` para incluir)
-- ✅ Filtrado personalizado con `&excludeServers=`
+-  Extrae enlaces de streaming (embeds)
+-  Extrae enlaces de descarga directa
+-  Separa SUB y DUB automáticamente
+-  **Mega excluido por defecto** (usar `&includeMega=true` para incluir)
+-  Filtrado personalizado con `&excludeServers=`
 
 **Respuesta:**
 ```json
@@ -95,10 +95,10 @@ AnimeAV1 usa SvelteKit con datos embebidos en JavaScript. La API:
 **Endpoint:** `GET /api/v1/anime/search?q=naruto`
 
 **Características:**
-- ✅ Usa `/catalogo?q=` de AnimeAV1
-- ✅ Extrae resultados del JSON de SvelteKit
-- ✅ Retorna hasta 20 resultados
-- ✅ Incluye metadatos completos (score, estado, año)
+-  Usa `/catalogo?q=` de AnimeAV1
+-  Extrae resultados del JSON de SvelteKit
+-  Retorna hasta 20 resultados
+-  Incluye metadatos completos (score, estado, año)
 
 **Respuesta:**
 ```json
@@ -126,7 +126,7 @@ AnimeAV1 usa SvelteKit con datos embebidos en JavaScript. La API:
 }
 ```
 
-## 🔧 Mejoras Técnicas Implementadas
+##  Mejoras Técnicas Implementadas
 
 ### Regex Mejorado
 ```javascript
@@ -156,17 +156,17 @@ if (includeMega !== 'true' && !excluded.includes('mega')) {
 }
 ```
 
-## 📊 Pruebas Exitosas
+##  Pruebas Exitosas
 
 ```
-✅ Información del anime: 12 episodios, score 6.91
-✅ Enlaces de episodio: 4 servers SUB, 4 servers DUB
-✅ Búsqueda: 20 resultados encontrados
-✅ Mega excluido por defecto
-✅ Fuente: JSON (extracción directa)
+ Información del anime: 12 episodios, score 6.91
+ Enlaces de episodio: 4 servers SUB, 4 servers DUB
+ Búsqueda: 20 resultados encontrados
+ Mega excluido por defecto
+ Fuente: JSON (extracción directa)
 ```
 
-## 🚀 Endpoints Disponibles
+##  Endpoints Disponibles
 
 | Endpoint | Método | Descripción |
 |----------|--------|-------------|
@@ -178,7 +178,7 @@ if (includeMega !== 'true' && !excluded.includes('mega')) {
 | `/api/v1/anime/batch-download` | POST | Descarga múltiple |
 | `/api/v1/anime/batch/:id` | GET | Estado descarga batch |
 
-## 📝 Parámetros
+##  Parámetros
 
 ### `/info`
 - `url` (requerido): URL del anime
@@ -192,32 +192,32 @@ if (includeMega !== 'true' && !excluded.includes('mega')) {
 - `q` (requerido): Término de búsqueda
 - `domain` (opcional): Dominio (default: animeav1.com)
 
-## 🎯 Próximos Pasos Sugeridos
+##  Próximos Pasos Sugeridos
 
-1. ✅ ~~Arreglar extracción JSON de SvelteKit~~ **COMPLETADO**
-2. ✅ ~~Implementar búsqueda funcional~~ **COMPLETADO**
-3. ✅ ~~Filtro inteligente de Mega~~ **COMPLETADO**
-4. 🔄 Implementar descarga real de videos (youtube-dl-exec)
-5. 🔄 Cache con Redis para mejorar velocidad
-6. 🔄 Rate limiting por servidor para evitar bans
-7. 🔄 Websockets para progreso de descarga en tiempo real
+1.  ~~Arreglar extracción JSON de SvelteKit~~ **COMPLETADO**
+2.  ~~Implementar búsqueda funcional~~ **COMPLETADO**
+3.  ~~Filtro inteligente de Mega~~ **COMPLETADO**
+4.  Implementar descarga real de videos (youtube-dl-exec)
+5.  Cache con Redis para mejorar velocidad
+6.  Rate limiting por servidor para evitar bans
+7.  Websockets para progreso de descarga en tiempo real
 
-## 📚 Documentación
+##  Documentación
 
 - `GUIA-ANIME-API.md` - Guía de instalación y uso
 - `MEGA-FILTER-INFO.md` - Información sobre el filtro de Mega
 - `anime-scraper-api.md` - API Reference completa
 
-## ⚖️ Consideraciones Legales
+## ️ Consideraciones Legales
 
-⚠️ **IMPORTANTE:** Esta API es solo para **fines educativos**.
+️ **IMPORTANTE:** Esta API es solo para **fines educativos**.
 
 - Respeta los términos de servicio de AnimeAV1
 - No hagas scraping masivo (usa rate limiting)
 - Respeta el copyright del contenido
 - Considera usar la API oficial si existe
 
-## 🐛 Issues Conocidos
+##  Issues Conocidos
 
 Ninguno. La API está completamente funcional.
       {"server": "PDrain", "url": "https://pixeldrain.com/u/LN3zSTWL?embed"},
@@ -238,7 +238,7 @@ Ninguno. La API está completamente funcional.
 }
 ```
 
-## 🚀 Cómo Probar
+##  Cómo Probar
 
 ### 1. Asegúrate de tener cheerio instalado:
 ```bash
@@ -256,7 +256,7 @@ npm start
 node ../Apis/test-animeav1.js
 ```
 
-## 📝 Ejemplos de Uso
+##  Ejemplos de Uso
 
 ### Obtener info de un anime:
 ```bash
@@ -276,24 +276,24 @@ curl -H "X-API-Key: TU_KEY" \
   "http://localhost:3000/api/v1/anime/search?q=naruto"
 ```
 
-## 🎁 Servidores Detectados
+##  Servidores Detectados
 
 La API detecta y extrae enlaces de:
 
 ### Streaming:
-- ✅ **PDrain** (PixelDrain)
-- ✅ **HLS** (Zilla Networks)
-- ✅ **UPNShare**
-- ✅ **Mega** (embed)
-- ✅ **MP4Upload**
+-  **PDrain** (PixelDrain)
+-  **HLS** (Zilla Networks)
+-  **UPNShare**
+-  **Mega** (embed)
+-  **MP4Upload**
 
 ### Descarga Directa:
-- ✅ **PDrain** (PixelDrain)
-- ✅ **Mega** (archivo)
-- ✅ **MP4Upload**
-- ✅ **1Fichier**
+-  **PDrain** (PixelDrain)
+-  **Mega** (archivo)
+-  **MP4Upload**
+-  **1Fichier**
 
-## 🔧 Características
+##  Características
 
 1. **Extracción de JSON** - Más rápido y confiable
 2. **Fallback a HTML** - Por si el JSON falla
@@ -301,20 +301,20 @@ La API detecta y extrae enlaces de:
 4. **Múltiples servidores** - Varios enlaces por episodio
 5. **Metadatos completos** - Score MAL, géneros, fechas, etc.
 
-## 📊 Respuesta de la API
+##  Respuesta de la API
 
 Ahora la API retorna un campo `source` que indica de dónde obtuvo los datos:
 - `"json"` - Extraído del JSON embebido (más confiable)
 - `"html"` - Scraping del HTML (fallback)
 
-## ⚠️ Notas Importantes
+## ️ Notas Importantes
 
 1. **Rate Limiting**: AnimeAV1 puede tener límites, respétalos
 2. **User-Agent**: La API usa un User-Agent válido
 3. **CORS**: AnimeAV1 puede bloquear requests desde navegadores
 4. **Legalidad**: Úsalo solo con fines educativos
 
-## 🎯 Próximos Pasos
+##  Próximos Pasos
 
 Puedes mejorar la API agregando:
 

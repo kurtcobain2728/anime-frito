@@ -1,26 +1,26 @@
-# 🎬 Anime1v API - Guía de Uso
+#  Anime1v API - Guía de Uso
 
 API REST para obtener información de animes desde AnimeAV1.com
 
-**Base URL**: `https://fxxmorgan.me/api/anime1v`
+**Base URL**: `http://localhost:3001/api/v1/anime`
 
 ---
 
-## 🚀 Inicio Rápido
+##  Inicio Rápido
 
 ### 1. Obtener API Key
 
-1. Visita [https://fxxmorgan.me/api](https://fxxmorgan.me/api)
+1. Visita [https://localhost:3001](https://localhost:3001)
 2. Regístrate con tu email
 3. Inicia sesión
 4. Ve a tu Dashboard
 5. Copia tu API Key
 
-**Plan Free incluido**: 100 requests/día gratis 🎉
+**Plan Free incluido**: 100 requests/día gratis 
 
 ---
 
-## 🎯 Cómo Usar la API
+##  Cómo Usar la API
 
 ### Autenticación
 
@@ -36,7 +36,7 @@ X-API-Key: tu_api_key_aqui
 
 ```bash
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com"
+  "http://localhost:3001/api/v1/anime/search?q=naruto&domain=animeav1.com"
 ```
 
 **Parámetros**:
@@ -47,7 +47,7 @@ curl -H "X-API-Key: TU_API_KEY" \
 
 ```bash
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/info?url=https://animeav1.com/media/nombre-anime"
+  "http://localhost:3001/api/v1/anime/info?url=https://animeav1.com/media/nombre-anime"
 ```
 
 **Parámetros**:
@@ -57,7 +57,7 @@ curl -H "X-API-Key: TU_API_KEY" \
 
 ```bash
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=https://animeav1.com/media/anime/1"
+  "http://localhost:3001/api/v1/anime/episode?url=https://animeav1.com/media/anime/1"
 ```
 
 **Parámetros**:
@@ -67,13 +67,13 @@ curl -H "X-API-Key: TU_API_KEY" \
 
 ---
 
-## 💻 Ejemplos de Código
+##  Ejemplos de Código
 
 ### JavaScript (Node.js)
 
 ```javascript
 const API_KEY = 'tu_api_key_aqui';
-const BASE_URL = 'https://fxxmorgan.me/api/anime1v';
+const BASE_URL = 'http://localhost:3001/api/v1/anime';
 
 async function buscarAnime(query) {
   const response = await fetch(
@@ -93,7 +93,7 @@ buscarAnime('naruto').then(console.log);
 import requests
 
 API_KEY = 'tu_api_key_aqui'
-BASE_URL = 'https://fxxmorgan.me/api/anime1v'
+BASE_URL = 'http://localhost:3001/api/v1/anime'
 
 def buscar_anime(query):
     response = requests.get(
@@ -111,28 +111,28 @@ print(buscar_anime('naruto'))
 ```bash
 # Buscar
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com"
+  "http://localhost:3001/api/v1/anime/search?q=naruto&domain=animeav1.com"
 
 # Info
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/info?url=https://animeav1.com/media/anime"
+  "http://localhost:3001/api/v1/anime/info?url=https://animeav1.com/media/anime"
 
 # Episodio sin Mega (default)
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=https://animeav1.com/media/anime/1"
+  "http://localhost:3001/api/v1/anime/episode?url=https://animeav1.com/media/anime/1"
 
 # Episodio con Mega
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=https://animeav1.com/media/anime/1&includeMega=true"
+  "http://localhost:3001/api/v1/anime/episode?url=https://animeav1.com/media/anime/1&includeMega=true"
 
 # Excluir múltiples servidores
 curl -H "X-API-Key: TU_API_KEY" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=https://animeav1.com/media/anime/1&excludeServers=mega,fembed"
+  "http://localhost:3001/api/v1/anime/episode?url=https://animeav1.com/media/anime/1&excludeServers=mega,fembed"
 ```
 
 ---
 
-## 🚫 Filtro de Servidores Mega
+##  Filtro de Servidores Mega
 
 Por defecto, **Mega está excluido** porque requiere clave de cifrado manual.
 
@@ -141,14 +141,14 @@ Por defecto, **Mega está excluido** porque requiere clave de cifrado manual.
 ```bash
 # Agregar parámetro includeMega=true
 curl -H "X-API-Key: TU_KEY" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=...&includeMega=true"
+  "http://localhost:3001/api/v1/anime/episode?url=...&includeMega=true"
 ```
 
 Ver [MEGA-FILTER-INFO.md](MEGA-FILTER-INFO.md) para más detalles.
 
 ---
 
-## 📊 Rate Limiting
+##  Rate Limiting
 
 Tu plan determina cuántas requests puedes hacer:
 
@@ -170,36 +170,36 @@ X-RateLimit-Reset: 1698364800
 
 ---
 
-## ⚠️ Notas Importantes
+## ️ Notas Importantes
 
-- ✅ **Mega excluido por defecto** - Evita popups de clave de cifrado
-- ✅ **Rate limiting activo** - Respeta tu límite diario
-- ✅ **URLs pueden expirar** - Algunos servidores rotan enlaces
-- ✅ **Solo AnimeAV1** - Otros sitios no soportados actualmente
+-  **Mega excluido por defecto** - Evita popups de clave de cifrado
+-  **Rate limiting activo** - Respeta tu límite diario
+-  **URLs pueden expirar** - Algunos servidores rotan enlaces
+-  **Solo AnimeAV1** - Otros sitios no soportados actualmente
 
 ---
 
-## 🐛 Errores Comunes
+##  Errores Comunes
 
 ### 401 Unauthorized
-- ❌ API Key inválida o expirada
-- ✅ Verifica que estés enviando el header `X-API-Key`
+-  API Key inválida o expirada
+-  Verifica que estés enviando el header `X-API-Key`
 
 ### 429 Too Many Requests
-- ❌ Límite de rate excedido
-- ✅ Espera hasta el reset o upgrade tu plan
+-  Límite de rate excedido
+-  Espera hasta el reset o upgrade tu plan
 
 ### 404 Not Found
-- ❌ URL del anime no existe
-- ✅ Verifica la URL en animeav1.com
+-  URL del anime no existe
+-  Verifica la URL en animeav1.com
 
 ### 500 Internal Server Error
-- ❌ Sitio cambió su estructura
-- ✅ Reporta el problema
+-  Sitio cambió su estructura
+-  Reporta el problema
 
 ---
 
-## 📚 Documentación Adicional
+##  Documentación Adicional
 
 - **[API Reference Completa](anime-scraper-api.md)** - Todos los endpoints
 - **[Filtro Mega](MEGA-FILTER-INFO.md)** - Documentación del filtro
@@ -208,13 +208,13 @@ X-RateLimit-Reset: 1698364800
 
 ---
 
-## 💡 Uso Avanzado
+##  Uso Avanzado
 
 ### Workflow Completo
 
 ```javascript
 const API_KEY = 'tu_key';
-const BASE = 'https://fxxmorgan.me/api/anime1v';
+const BASE = 'http://localhost:3001/api/v1/anime';
 
 async function descargarAnime(nombre) {
   // 1. Buscar
@@ -246,22 +246,22 @@ descargarAnime('naruto');
 
 ---
 
-## 🆘 Soporte
+##  Soporte
 
-- 📧 **Email**: contact@fxxmorgan.me
-- 🌐 **Web**: [https://fxxmorgan.me/api](https://fxxmorgan.me/api)
-- 📖 **Docs**: [GitHub](https://github.com/FxxMorgan/anime1v-api)
-- 🐛 **Issues**: Reporta problemas con la API
+-  **Email**: contact@fxxmorgan.me
+-  **Web**: [https://localhost:3001](https://localhost:3001)
+-  **Docs**: [GitHub](https://github.com/FxxMorgan/anime1v-api)
+-  **Issues**: Reporta problemas con la API
 
 ---
 
-## 📄 Términos de Uso
+##  Términos de Uso
 
-- ✅ Uso personal y educativo permitido
-- ✅ Respeta el rate limiting
-- ❌ No abuses de la API
-- ❌ No revender accesos
-- ❌ No hacer scraping de la API
+-  Uso personal y educativo permitido
+-  Respeta el rate limiting
+-  No abuses de la API
+-  No revender accesos
+-  No hacer scraping de la API
 
 ---
 
@@ -287,7 +287,7 @@ npm install @google-cloud/storage
 npm install fluent-ffmpeg
 ```
 
-## 🔧 Configuración de Descarga Real
+##  Configuración de Descarga Real
 
 Para implementar descarga real de videos, puedes usar:
 
@@ -328,7 +328,7 @@ async function extractVideoUrl(pageUrl) {
 }
 ```
 
-## 📊 Límites de la API
+##  Límites de la API
 
 Recuerda que cada plan tiene límites:
 
@@ -336,7 +336,7 @@ Recuerda que cada plan tiene límites:
 - **Premium**: 1000 requests/día, 50 descargas/día
 - **Enterprise**: 10000 requests/día, descargas ilimitadas
 
-## ⚖️ Consideraciones Legales
+## ️ Consideraciones Legales
 
 **IMPORTANTE**: El scraping puede violar términos de servicio de algunos sitios.
 
@@ -345,7 +345,7 @@ Recuerda que cada plan tiene límites:
 - No sobrecargues los servidores
 - Considera el copyright del contenido
 
-## 🐛 Debugging
+##  Debugging
 
 Si tienes problemas:
 
@@ -355,7 +355,7 @@ Si tienes problemas:
 4. Revisa los logs del servidor
 5. Usa herramientas como Postman para probar
 
-## 📞 Soporte
+##  Soporte
 
 Para más ayuda, revisa:
 - Documentación de Cheerio: https://cheerio.js.org/

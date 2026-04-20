@@ -1,8 +1,8 @@
 // Ejemplo de uso de la API de Anime1v
-// API pública en: https://fxxmorgan.me/api/anime1v
+// API pública en: http://localhost:3001/api/v1/anime
 
-const API_KEY = 'tu_api_key_aqui'; // Obtén tu API key en https://fxxmorgan.me/api
-const BASE_URL = 'https://fxxmorgan.me/api/anime1v';
+const API_KEY = 'tu_api_key_aqui'; // Obtén tu API key en https://localhost:3001
+const BASE_URL = 'http://localhost:3001/api/v1/anime';
 
 // Función auxiliar para hacer requests
 async function apiRequest(endpoint, options = {}) {
@@ -21,7 +21,7 @@ async function apiRequest(endpoint, options = {}) {
 // 1. Buscar un anime
 // ============================================
 async function searchAnime(query) {
-  console.log(`\n🔍 Buscando: ${query}`);
+  console.log(`\n Buscando: ${query}`);
   
   const result = await apiRequest(
     `/search?q=${encodeURIComponent(query)}&domain=animeav1.com`
@@ -35,7 +35,7 @@ async function searchAnime(query) {
 // 2. Obtener información completa del anime
 // ============================================
 async function getAnimeInfo(animeUrl) {
-  console.log(`\n📺 Obteniendo info de: ${animeUrl}`);
+  console.log(`\n Obteniendo info de: ${animeUrl}`);
   
   const result = await apiRequest(
     `/info?url=${encodeURIComponent(animeUrl)}`
@@ -52,7 +52,7 @@ async function getAnimeInfo(animeUrl) {
 // 3. Obtener enlaces de descarga de un episodio
 // ============================================
 async function getEpisodeLinks(episodeUrl) {
-  console.log(`\n🎬 Obteniendo enlaces del episodio: ${episodeUrl}`);
+  console.log(`\n Obteniendo enlaces del episodio: ${episodeUrl}`);
   
   const result = await apiRequest(
     `/episode?url=${encodeURIComponent(episodeUrl)}`
@@ -70,7 +70,7 @@ async function getEpisodeLinks(episodeUrl) {
 // 4. Obtener enlaces con filtro de Mega
 // ============================================
 async function getEpisodeLinksWithoutMega(episodeUrl) {
-  console.log(`\n🎬 Obteniendo enlaces (sin Mega): ${episodeUrl}`);
+  console.log(`\n Obteniendo enlaces (sin Mega): ${episodeUrl}`);
   
   // Por defecto Mega ya está excluido, pero puedes ser explícito
   const result = await apiRequest(
@@ -89,7 +89,7 @@ async function getEpisodeLinksWithoutMega(episodeUrl) {
 // 5. Incluir Mega explícitamente
 // ============================================
 async function getEpisodeLinksWithMega(episodeUrl) {
-  console.log(`\n🎬 Obteniendo enlaces (con Mega): ${episodeUrl}`);
+  console.log(`\n Obteniendo enlaces (con Mega): ${episodeUrl}`);
   
   const result = await apiRequest(
     `/episode?url=${encodeURIComponent(episodeUrl)}&includeMega=true`
@@ -107,7 +107,7 @@ async function getEpisodeLinksWithMega(episodeUrl) {
 // 6. Excluir múltiples servidores
 // ============================================
 async function getEpisodeLinksCustomFilter(episodeUrl, excludeServers = []) {
-  console.log(`\n🎬 Obteniendo enlaces (filtro custom): ${episodeUrl}`);
+  console.log(`\n Obteniendo enlaces (filtro custom): ${episodeUrl}`);
   console.log(`Servidores excluidos: ${excludeServers.join(', ')}`);
   
   const params = new URLSearchParams({
@@ -139,7 +139,7 @@ async function ejemploCompleto() {
       return;
     }
     
-    console.log(`\n✅ Encontrados ${searchResults.length} resultados`);
+    console.log(`\n Encontrados ${searchResults.length} resultados`);
     console.log(`Primer resultado: ${searchResults[0].title}`);
     
     // 2. Obtener info del primer resultado
@@ -161,10 +161,10 @@ async function ejemploCompleto() {
     await getEpisodeLinksCustomFilter(firstEpisode.url, ['mega', 'fembed']);
     
     console.log('\n' + '='.repeat(50));
-    console.log('✅ Ejemplo completo ejecutado exitosamente!');
+    console.log(' Ejemplo completo ejecutado exitosamente!');
     
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error(' Error:', error.message);
   }
 }
 
@@ -174,14 +174,14 @@ async function ejemploCompleto() {
 async function listarTodosLosEpisodios(animeUrl) {
   try {
     console.log('='.repeat(50));
-    console.log('📺 Listando todos los episodios...');
+    console.log(' Listando todos los episodios...');
     
     // Obtener info del anime
     const animeInfo = await getAnimeInfo(animeUrl);
     
-    console.log(`\n🎬 ${animeInfo.title}`);
-    console.log(`📊 Score: ${animeInfo.score}`);
-    console.log(`📺 Total de episodios: ${animeInfo.totalEpisodes}`);
+    console.log(`\n ${animeInfo.title}`);
+    console.log(` Score: ${animeInfo.score}`);
+    console.log(` Total de episodios: ${animeInfo.totalEpisodes}`);
     console.log(`\nEpisodios disponibles:`);
     
     animeInfo.episodes.forEach(ep => {
@@ -190,7 +190,7 @@ async function listarTodosLosEpisodios(animeUrl) {
     });
     
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error(' Error:', error.message);
   }
 }
 
@@ -200,7 +200,7 @@ async function listarTodosLosEpisodios(animeUrl) {
 async function compararServidores(episodeUrl) {
   try {
     console.log('='.repeat(50));
-    console.log('🔍 Comparando disponibilidad de servidores...\n');
+    console.log(' Comparando disponibilidad de servidores...\n');
     
     // Sin Mega (default)
     const sinMega = await apiRequest(
@@ -219,10 +219,10 @@ async function compararServidores(episodeUrl) {
     conMega.data.servers.sub.forEach(s => console.log(`  - ${s.server}`));
     
     const diferencia = conMega.data.servers.sub.length - sinMega.data.servers.sub.length;
-    console.log(`\n📊 Diferencia: ${diferencia} servidor(es) adicional(es) con Mega`);
+    console.log(`\n Diferencia: ${diferencia} servidor(es) adicional(es) con Mega`);
     
   } catch (error) {
-    console.error('❌ Error:', error.message);
+    console.error(' Error:', error.message);
   }
 }
 
@@ -268,31 +268,31 @@ async function compararServidores(episodeUrl) {
 
 console.log(`
 ╔════════════════════════════════════════════════╗
-║      🎬 ANIME1V API - EJEMPLOS                ║
+║       ANIME1V API - EJEMPLOS                ║
 ╚════════════════════════════════════════════════╝
 
-🌐 API Base URL: https://fxxmorgan.me/api/anime1v
+ API Base URL: http://localhost:3001/api/v1/anime
 
 Para usar esta API, necesitas:
-1. ✅ Registrarte en https://fxxmorgan.me/api
-2. ✅ Obtener tu API Key gratuita
-3. ✅ Reemplazar 'tu_api_key_aqui' con tu key real
+1.  Registrarte en https://localhost:3001
+2.  Obtener tu API Key Open Source
+3.  Reemplazar 'tu_api_key_aqui' con tu key real
 
-📋 Endpoints disponibles:
+ Endpoints disponibles:
 - GET  /search?q=nombre&domain=animeav1.com
 - GET  /info?url=...
 - GET  /episode?url=...
 
-🔧 Parámetros especiales:
+ Parámetros especiales:
 - includeMega=true     → Incluir servidor Mega
 - excludeServers=mega  → Excluir servidores específicos
 
-📊 Rate Limiting:
+ Rate Limiting:
 - Plan Free: 100 requests/día
 - Plan Premium: Próximamente
 - Plan Enterprise: Próximamente
 
-💡 Descomenta alguna función arriba para probar!
-📖 Documentación: https://github.com/FxxMorgan/anime1v-api
+ Descomenta alguna función arriba para probar!
+ Documentación: https://github.com/FxxMorgan/anime1v-api
 `);
 

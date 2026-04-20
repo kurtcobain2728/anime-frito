@@ -1,188 +1,147 @@
-# 🎬 Anime1v API - Documentación
+# Anime1v API
 
-Documentación oficial de la API pública para scraping de anime desde AnimeAV1.com
+Una API 100% Open Source construida en Node.js para hacer un scraping limpio y rapido de animes y episodios desde AnimeAV1.
 
-**Base URL**: `https://fxxmorgan.me/api/anime1v`
-
-[![Status](https://img.shields.io/badge/status-online-success)](https://fxxmorgan.me/api/anime1v)
-[![API Version](https://img.shields.io/badge/version-1.0.0-blue)](https://fxxmorgan.me/api/anime1v)
 [![License](https://img.shields.io/badge/license-MIT-green)](LICENSE)
+[![Open Source](https://img.shields.io/badge/Open%20Source-Open-red)](#)
+
+Esta herramienta fue desarrollada para facilitar la consulta y consumo de contenido automatizado. Ha sido liberada de manera gratuita para la comunidad. Si utilizas este codigo en tus proyectos, **por favor incluye los creditos correspondientes a su creador original (FxxMorgan)**.
 
 ---
 
-## 🌟 Características
+## Caracteristicas
 
-- 🔍 **Búsqueda de anime** por nombre
-- 📺 **Información completa** de anime (episodios, géneros, score)
-- 🎬 **Enlaces de video** SUB y DUB
-- 🚫 **Filtro de servidores** (Mega excluido por default)
-- 🔐 **Autenticación con API Key**
-- ⚡ **Rate limiting** por planes
-- 📊 **100 requests/día gratis**
+- Busqueda de Anime: Encuentra series, peliculas o especiales por su nombre.
+- Informacion Detallada: Obten descripcion, generos, anio, lista completa de episodios y miniaturas.
+- Extraccion de Enlaces de Video: Obtiene urls de streaming y descarga en multiples calidades y variaciones (SUB/DUB).
+- Descargador Nativo Integrado: Cola de descargas desde los servidores de video directamente al disco.
+- CLI Iterativo: Script de terminal integrado para buscar y descargar temporadas completas facilmente.
+- Multiples Servidores Soportados: Extrae metadatos y videos desde PixelDrain, 1Fichier, MP4Upload, HLS, UPNShare, entre otros.
+- Filtro Configurables: Capacidad de excluir o preferir servidores problematicos.
+- Totalmente Modificable: Sin limites de peticiones comerciales ni planes de pago. Todo ocurre en tu entorno.
 
 ---
 
-## 🚀 Inicio Rápido
+## Instalacion y Uso Local
 
-### 1. Obtener API Key
+Este repositorio incluye todo el backend listo para levantarse en tu entorno local o ser desplegado en tu propio VPS/Servidor.
 
-Regístrate en **[fxxmorgan.me/api](https://fxxmorgan.me/api)** para obtener tu API Key gratuita.
+### 1. Requisitos
 
-### 2. Primera Request
+- [Node.js](https://nodejs.org/) 18 o superior.
+
+### 2. Configurar Variables de Entorno
+
+Copia el archivo base de variables de entorno:
 
 ```bash
-curl -H "X-API-Key: tu_api_key" \
-  "https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com"
+cp .env.example .env
 ```
+*(En Windows PowerShell: `Copy-Item .env.example .env`)*
 
-```javascript
-fetch('https://fxxmorgan.me/api/anime1v/search?q=naruto&domain=animeav1.com', {
-  headers: { 'X-API-Key': 'tu_api_key' }
-})
-.then(res => res.json())
-.then(data => console.log(data));
-```
+En el archivo `.env` puedes definir tus propias contraseñas o API Keys en la variable `API_KEYS` o simplemente deshabilitar el middleware si lo usaras en tu propia red interna. Tambien puedes configurar el puerto (por defecto 3001).
 
----
+### 3. Instalar dependencias e iniciar
 
-## 📋 Endpoints
-
-| Endpoint | Método | Descripción |
-|----------|--------|-------------|
-| `/search` | GET | Buscar anime por nombre |
-| `/info` | GET | Información completa del anime |
-| `/episode` | GET | Enlaces de un episodio (SUB/DUB) |
-
----
-
-## 📚 Documentación
-
-- **[README](Apis/anime1v/README.md)** - Inicio rápido
-- **[API Reference](Apis/anime1v/anime-scraper-api.md)** - Referencia completa
-- **[Guía de Uso](Apis/anime1v/GUIA-ANIME-API.md)** - Tutorial detallado
-- **[Filtro Mega](Apis/anime1v/MEGA-FILTER-INFO.md)** - Sistema de filtrado
-- **[Changelog](Apis/anime1v/CAMBIOS-ANIMEAV1.md)** - Historial de cambios
-- **[Ejemplos](Apis/anime1v/ejemplo-anime-api.js)** - Código de ejemplo
-
----
-
-## 💡 Ejemplo Completo
-
-```javascript
-const API_KEY = 'tu_api_key';
-const BASE_URL = 'https://fxxmorgan.me/api/anime1v';
-
-async function obtenerAnime(query) {
-  // 1. Buscar
-  const searchRes = await fetch(
-    `${BASE_URL}/search?q=${query}&domain=animeav1.com`,
-    { headers: { 'X-API-Key': API_KEY } }
-  );
-  const { data: { results } } = await searchRes.json();
-  
-  // 2. Obtener info
-  const infoRes = await fetch(
-    `${BASE_URL}/info?url=${results[0].url}`,
-    { headers: { 'X-API-Key': API_KEY } }
-  );
-  const anime = await infoRes.json();
-  
-  console.log(`${anime.data.title} - ${anime.data.totalEpisodes} episodios`);
-  
-  // 3. Obtener enlaces del primer episodio
-  const epRes = await fetch(
-    `${BASE_URL}/episode?url=${anime.data.episodes[0].url}`,
-    { headers: { 'X-API-Key': API_KEY } }
-  );
-  const links = await epRes.json();
-  
-  console.log('Servidores SUB:', links.data.servers.sub.length);
-  console.log('Servidores DUB:', links.data.servers.dub.length);
-}
-
-obtenerAnime('naruto');
-```
-
----
-
-## 📊 Planes y Rate Limiting
-
-| Plan | Requests/Día | Precio | Estado |
-|------|-------------|--------|--------|
-| **Free** | 100 | Gratis | ✅ Disponible |
-| Premium | 1,000 | - | 🔒 Próximamente |
-| Enterprise | 10,000 | - | 🔒 Próximamente |
-
----
-
-## 🚫 Filtro de Servidores
-
-Por defecto, **Mega está excluido** porque requiere clave de cifrado manual en el navegador.
-
-### Para incluir Mega:
+Instala las librerias e inicia el entorno de desarrollo:
 
 ```bash
-curl -H "X-API-Key: tu_key" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=...&includeMega=true"
+npm install
+npm run dev
 ```
 
-### Excluir otros servidores:
+El servidor local estara corriendo por defecto en `http://localhost:3001`.
+
+---
+
+## Herramienta CLI de Descargas Automaticas
+
+El proyecto provee el script `descargador.js` para usar la API directamente desde la consola sin necesidad de escribir clientes HTTP adicionales.
 
 ```bash
-curl -H "X-API-Key: tu_key" \
-  "https://fxxmorgan.me/api/anime1v/episode?url=...&excludeServers=mega,fembed"
+node descargador.js
 ```
 
-Ver [documentación del filtro](Apis/anime1v/MEGA-FILTER-INFO.md) para más detalles.
+Funciona de la siguiente manera:
+1. Te pregunta el titulo que deseas buscar.
+2. Listara los resultados coincidentes para que selecciones el correcto.
+3. Descargara la informacion de la serie mostrando el conteo de episodios.
+4. Te preguntara que numeros de episodio quieres (puedes decirle "1,2,3" o "todos").
+5. Seleccionara automaticamente el mejor servidor (priorizando directos como PixelDrain o 1Fichier) y lo descargara a la carpeta `/downloads` mostrando barras de progreso simultaneas.
 
 ---
 
-## ⚠️ Notas Importantes
+## Documentacion de Endpoints Principales
 
-- ✅ Mega excluido por defecto (evita popups de clave)
-- ✅ Rate limiting automático por plan
-- ✅ URLs de video pueden expirar
-- ✅ Solo contenido de AnimeAV1.com
+Si mantienes el middleware de autenticacion activo, debes pasar tu API Key generada localmente en cada request:
+`X-API-Key: <TU_API_KEY_LOCAL>`
 
----
+### 1. Busqueda de Animes
+`GET /api/v1/anime/search?q=nombre_del_anime`
+Busca coincidencias textuales en la base de datos de la web fuente y devuelve array con ID, titulo, url del anime y otros meta-datos.
 
-## 🐛 Soporte
+### 2. Informacion de Anime y Capitulos
+`GET /api/v1/anime/info?url=url_original_del_anime`
+Recibe la URL de un anime entregada por la busqueda y devuelve la informacion en detalle, asi como la lista de objetos `episodes` con sus nombres y URLs correspondientes para el proximo paso.
 
-- 📧 **Email**: contact@fxxmorgan.me
-- 🌐 **Portal**: [fxxmorgan.me/api](https://fxxmorgan.me/api)
-- 📖 **Docs**: [github.com/FxxMorgan/anime1v-api](https://github.com/FxxMorgan/anime1v-api)
-- 🐛 **Issues**: [Reportar problemas](https://github.com/FxxMorgan/anime1v-api/issues)
+### 3. Extraccion de Enlaces de Video
+`GET /api/v1/anime/episode?url=url_del_episodio`
+Dada la URL de un episodio logica extraida del endpoint anterior, este metodo escrapara el reproductor y extraera todos los iframes, enlaces de streaming y archivos de descarga identificando el servidor (PDrain, Fembed, MP4Upload, etc) e idioma (SUB, DUB).
 
----
+### 4. Controlador de Descarga Interno
+`POST /api/v1/anime/download`
+Recibe por body `{ "url": "url_de_episodio" }` (y opcionalmente preferancias como `"variant": "SUB"`). El servidor creara un Job en segundo plano descargando el archivo directamente utilizando la prioridad interna. Devuelve un `downloadId`.
 
-## 📄 Licencia
+`GET /api/v1/anime/download/:id`
+Usando el `downloadId`, devuelve el progreso en porcentaje, tamaño, ruta guardada local y el servidor de origen actual. Util para barras de estado.
 
-Documentación bajo MIT License. El backend es propietario.
-
-Ver [LICENSE](LICENSE) para más detalles.
-
----
-
-## ⚖️ Disclaimer
-
-Esta API es solo para fines educativos. Respeta los términos de servicio de AnimeAV1.com y las leyes de copyright de tu jurisdicción.
+*(Compatibilidad: para apps legacy, tambien responden en `/api/anime1v/*`)*
 
 ---
 
-## 👨‍💻 Autor
+## Manejo de Servidores y Descargas
 
-**Feer** - [FxxMorgan](https://github.com/FxxMorgan)
+La API soporta capturar direcciones de una amplia variedad de servidores. El motor de descarga (usado por `/download` y `descargador.js`) clasifica y prioriza la extraccion.
+
+Servidores nativos altamente compatibles para transferencia de datos:
+- PixelDrain (descarga directa preferida)
+- 1Fichier
+- MP4Upload
+- Server internos tipo HLS (.m3u8), UPNShare.
+
+### Filtros Opcionales
+En peticiones manuales al endpoint `/episode` puedes controlar los extractores con los siguientes query params:
+
+- Excluir Mega: Por defecto, Mega esta excluido. Sus URL de descarga piden cifrado hash desde el JS del cliente web. Si aun asi necesitas su link en bruto para pasarlo a JDownloader u otro visualizador, puedes pedir `&includeMega=true`.
+- Excluir problematicos: Si un servidor demora demasiado la resolucion en tu servidor, omitelos usando querystring: `&excludeServers=mega,fembed,upnshare`
+- Servidor preferido: Internamente, si prefieres capturar directo de algun servidor en particular (ej. `&preferredServer=pdrain`), el sistema intentara usar ese primero.
 
 ---
 
-## 🙏 Agradecimientos
+## Creditos y Colaboracion
 
-- AnimeAV1.com por el contenido
-- Comunidad de Node.js
-- Todos los usuarios de la API
+Proyecto originado, escrito y mantenido por **FxxMorgan**.
+
+Ha sido convertido en una solucion comunitaria Open Source. Eres libre de leer, alojar, modificar completamente y extender la logica de esta API. Lo unico que se pide encarecidamente es **mantener los agradecimientos, enlaces locales y el nombre de su autor (FxxMorgan)** en derivados o proyectos que usen la base logica de este scraper.
 
 ---
 
-⭐ **Si te gusta esta API, dale una estrella en GitHub!**
+## Soporte y Contacto
 
-**[Obtener API Key →](https://fxxmorgan.me/api)**
+- Autor: Feer (FxxMorgan)
+- Repositorio y Documentacion: [github.com/FxxMorgan/anime1v-api](https://github.com/FxxMorgan/anime1v-api)
+- Reporte de Errores: [Issues en GitHub](https://github.com/FxxMorgan/anime1v-api/issues)
+
+---
+
+## Licencia
+
+Este proyecto se entrega bajo la licencia MIT. Eres libre de darle uso personal, recreativo o formativo. Puedes consultar detalles en el archivo [LICENSE](LICENSE).
+
+---
+
+## Disclaimer
+
+Este proyecto API tiene propositos exclusivamente educativos sobre programacion en NodeJS y scrapping en el DOM. 
+
+Recomiendo respetar los lineamientos y las leyes de copyright del contenido hospedado segun el pais donde realices tu despliegue.
