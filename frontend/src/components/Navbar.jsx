@@ -1,16 +1,21 @@
 import React, { useState } from "react";
 import { Menu, Search as SearchIcon, User, LogOut, Shield } from "lucide-react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../components/Navbar.css";
 
 const Navbar = ({ onMenuClick, user }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleSearch = (e) => {
     e.preventDefault();
     if (searchTerm.trim()) {
-      navigate("/search?q=" + encodeURIComponent(searchTerm));
+      if (location.pathname === "/hentai") {
+        navigate("/hentai?q=" + encodeURIComponent(searchTerm));
+      } else {
+        navigate("/search?q=" + encodeURIComponent(searchTerm));
+      }
     }
   };
 
@@ -34,7 +39,7 @@ const Navbar = ({ onMenuClick, user }) => {
           <SearchIcon size={18} className="search-icon" />
           <input
             type="text"
-            placeholder="Buscar anime..."
+            placeholder={location.pathname === "/hentai" ? "Buscar Hentai..." : "Buscar anime..."}
             className="search-input"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
