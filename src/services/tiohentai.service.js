@@ -160,37 +160,76 @@ async function searchAnime(query, domainCandidate) {
   }
 
   const domain = (domainCandidate || DEFAULT_DOMAIN).toString().trim();
-  const searchUrl = `https://${domain}/directorio?search=${encodeURIComponent(cleanQuery)}`;
-  const html = await fetchHtml(searchUrl);
+  let results = [];
 
-  const $ = cheerio.load(html);
-  const results = [];
-
-  $("article.anime").each((_, element) => {
-    const card = $(element);
-    const link = card.find("a[href^='/hentai/']").first().attr("href");
-    const title = card.find("h3.title").first().text().trim();
-    const image = card.find("img").first().attr("src");
-
-    if (!link || !title) return;
-
-    const slug = link.replace("/hentai/", "");
-    const typeEl = card.find(".anime-type-peli, .anime-type-serie, .anime-type-ova").first();
-    const type = typeEl.text().trim() || null;
-
-    results.push({
-      id: null,
-      title,
-      slug,
-      url: `https://${domain}${link}`,
-      image: image ? `https://${domain}${image}` : null,
-      backdrop: null,
-      type: type || "Anime",
-      score: null,
-      status: null,
-      year: null,
+  try {
+    const formData = new URLSearchParams();
+    formData.append('value', cleanQuery);
+    
+    const response = await axios.post(`https://${domain}/api/search`, formData, {
+      headers: {
+        ...HTTP_HEADERS,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      timeout: 10000
     });
-  });
+
+    if (Array.isArray(response.data)) {
+      results = response.data.map(item => {
+        let ttext = "Anime";
+        if (item.type == "1") ttext = "Pelicula";
+        else if (item.type == "2") ttext = "OVA";
+
+        return {
+          id: item.id,
+          title: item.title,
+          slug: item.slug,
+          url: `https://${domain}/hentai/${item.slug}`,
+          image: `https://${domain}/uploads/portadas/80x80/${item.id}.jpg`,
+          backdrop: null,
+          type: ttext,
+          score: null,
+          status: null,
+          year: null,
+        };
+      });
+    }
+  } catch (error) {
+    console.error("Error en API interna tiohentai, usando fallback:", error.message);
+  }
+
+  if (results.length === 0) {
+    const searchUrl = `https://${domain}/directorio?q=${encodeURIComponent(cleanQuery)}`;
+    const html = await fetchHtml(searchUrl);
+
+    const $ = cheerio.load(html);
+
+    $("article.anime").each((_, element) => {
+      const card = $(element);
+      const link = card.find("a[href^='/hentai/']").first().attr("href");
+      const title = card.find("h3.title").first().text().trim();
+      const image = card.find("img").first().attr("src");
+
+      if (!link || !title) return;
+
+      const slug = link.replace("/hentai/", "");
+      const typeEl = card.find(".anime-type-peli, .anime-type-serie, .anime-type-ova").first();
+      const type = typeEl.text().trim() || null;
+
+      results.push({
+        id: null,
+        title,
+        slug,
+        url: `https://${domain}${link}`,
+        image: image ? `https://${domain}${image}` : null,
+        backdrop: null,
+        type: type || "Anime",
+        score: null,
+        status: null,
+        year: null,
+      });
+    });
+  }
 
   return {
     success: true,
@@ -201,43 +240,54 @@ async function searchAnime(query, domainCandidate) {
 
 async function getPopularAnimes(domainCandidate) {
   const domain = (domainCandidate || DEFAULT_DOMAIN).toString().trim();
-  const url = `https://${domain}/directorio?orden=popular`;
-  const html = await fetchHtml(url);
-
-  const $ = cheerio.load(html);
   const results = [];
 
-  $("article.anime").each((_, element) => {
-    const card = $(element);
-    const link = card.find("a[href^='/hentai/']").first().attr("href");
-    const title = card.find("h3.title").first().text().trim();
-    const image = card.find("img").first().attr("src");
+  for (let p = 1; p <= 3; p++) {
+    try {
+      const url = `https://${domain}/directorio?orden=popular&p=${p}`;
+      const html = await fetchHtml(url);
+      const $ = cheerio.load(html);
 
-    if (!link || !title) return;
+      let hasItems = false;
+      $("article.anime").each((_, element) => {
+        hasItems = true;
+        const card = $(element);
+        const link = card.find("a[href^='/hentai/']").first().attr("href");
+        const title = card.find("h3.title").first().text().trim();
+        const image = card.find("img").first().attr("src");
 
-    const slug = link.replace("/hentai/", "");
-    const typeEl = card.find(".anime-type-peli, .anime-type-serie, .anime-type-ova").first();
-    const type = typeEl.text().trim() || null;
+        if (!link || !title) return;
 
-    results.push({
-      id: null,
-      title,
-      slug,
-      url: `https://${domain}${link}`,
-      image: image ? `https://${domain}${image}` : null,
-      backdrop: null,
-      type: type || "Anime",
-      score: null,
-      status: null,
-      year: null,
-    });
-  });
+        const slug = link.replace("/hentai/", "");
+        const typeEl = card.find(".anime-type-peli, .anime-type-serie, .anime-type-ova").first();
+        const type = typeEl.text().trim() || null;
+
+        results.push({
+          id: null,
+          title,
+          slug,
+          url: `https://${domain}${link}`,
+          image: image ? `https://${domain}${image}` : null,
+          backdrop: null,
+          type: type || "Anime",
+          score: null,
+          status: null,
+          year: null,
+        });
+      });
+
+      if (!hasItems) break;
+    } catch(e) {
+      console.error(`Error fetching page ${p} of popular hentai:`, e.message);
+      break;
+    }
+  }
 
   return {
     success: true,
     data: {
-      results: results.slice(0, 20),
-      count: Math.min(results.length, 20),
+      results,
+      count: results.length,
     },
     source: "tiohentai-popular",
   };

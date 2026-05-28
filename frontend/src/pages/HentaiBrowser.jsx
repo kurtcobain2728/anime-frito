@@ -14,16 +14,16 @@ const HentaiBrowser = () => {
   const API_KEY = 'dev-anime1v-key';
 
   useEffect(() => {
-    if (!query) {
-      setResults([]);
-      setLoading(false);
-      return;
-    }
 
     const fetchResults = async () => {
       setLoading(true);
       try {
-        const url = `${API_URL}/anime/search?q=${encodeURIComponent(query)}&domain=hentaila&apiKey=${API_KEY}`;
+        let url;
+        if (!query) {
+          url = `${API_URL}/anime/popular?domain=hentaila&apiKey=${API_KEY}`;
+        } else {
+          url = `${API_URL}/anime/search?q=${encodeURIComponent(query)}&domain=hentaila&apiKey=${API_KEY}`;
+        }
         const res = await fetch(url);
         const data = await res.json();
         if (data.success && data.data && data.data.results) {
@@ -62,7 +62,7 @@ const HentaiBrowser = () => {
 
       {loading && <div style={{ color: 'white', textAlign: 'center', marginTop: '5rem' }}>Buscando "{query}"...</div>}
 
-      {!loading && results.length === 0 && query && (
+      {!loading && results.length === 0 && (
         <p style={{ color: 'var(--text-muted)', textAlign: 'center' }}>No se encontraron resultados para "{query}".</p>
       )}
 

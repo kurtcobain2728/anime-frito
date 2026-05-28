@@ -30,7 +30,7 @@ router.get(
 router.get(
   "/popular",
   asyncHandler(async (req, res) => {
-    const response = await animeService.getPopularAnimes();
+    const response = await animeService.getPopularAnimes(req.query.domain);
     res.status(200).json(response);
   })
 );

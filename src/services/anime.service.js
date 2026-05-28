@@ -108,7 +108,8 @@ function findProviderForUrl(urlCandidate) {
 
 async function searchAnime(query, domainCandidate) {
   const forcedProvider = findProviderByDomain(domainCandidate) || findProviderById(domainCandidate);
-  const providersToTry = forcedProvider ? [forcedProvider] : PROVIDERS;
+  // Si no se especifica dominio, buscamos solo en los de anime (excluyendo hentai)
+  const providersToTry = forcedProvider ? [forcedProvider] : PROVIDERS.filter(p => p.id !== 'hentaila');
 
   let lastEmpty = null;
   const errors = [];
@@ -159,8 +160,12 @@ async function getAnimeInfo(urlCandidate) {
   };
 }
 
-async function getPopularAnimes() {
-  const providersToTry = PROVIDERS.filter(p => p.service.getPopularAnimes);
+async function getPopularAnimes(domainCandidate) {
+  const forcedProvider = findProviderByDomain(domainCandidate) || findProviderById(domainCandidate);
+  // Obtenemos populares solo de proveedores de anime (excluyendo hentai) si no se especifica dominio
+  const providersToTry = forcedProvider 
+    ? [forcedProvider].filter(p => p.service.getPopularAnimes)
+    : PROVIDERS.filter(p => p.service.getPopularAnimes && p.id !== 'hentaila');
   const promises = providersToTry.map(p => p.service.getPopularAnimes(p.domains[0]).catch(() => null));
   const responses = await Promise.all(promises);
 
