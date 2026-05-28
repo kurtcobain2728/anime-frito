@@ -206,7 +206,7 @@ const AnimeDetails = () => {
                 <div style={{color:"white", display:"flex", justifyContent:"center", alignItems:"center", height:"100%"}}>Cargando stream HD... (Buscando en múltiples servidores)</div>
               ) : videoUrl ? (
                 videoType === "iframe" ? (
-                  <iframe src={videoUrl} allowFullScreen width="100%" height="100%" frameBorder="0" style={{ position: "absolute", top: 0, left: 0 }} sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+                  <iframe src={videoUrl} allowFullScreen width="100%" height="100%" frameBorder="0" style={{ position: "absolute", top: 0, left: 0 }}></iframe>
                 ) : (
                   <ReactPlayer url={videoUrl} controls width="100%" height="100%" playing className="react-player" />
                 )
