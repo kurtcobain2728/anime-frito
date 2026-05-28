@@ -185,7 +185,7 @@ async function searchAnime(query, domainCandidate) {
           title: item.title,
           slug: item.slug,
           url: `https://${domain}/hentai/${item.slug}`,
-          image: `https://${domain}/uploads/portadas/80x80/${item.id}.jpg`,
+          image: `https://${domain}/uploads/portadas/${item.id}.jpg`,
           backdrop: null,
           type: ttext,
           score: null,
