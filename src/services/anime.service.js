@@ -3,7 +3,7 @@ const { ApiError } = require("../utils/api-error");
 const animeav1Service = require("./animeav1.service");
 const jkanimeService = require("./jkanime.service");
 const animeflvService = require("./animeflv.service");
-const hentailaService = require("./hentaila.service");
+const tiohentaiService = require("./tiohentai.service");
 const tioanimeService = require("./tioanime.service");
 
 const DEFAULT_ANIME_DOMAIN = process.env.DEFAULT_ANIME_DOMAIN || "animeav1.com";
@@ -28,10 +28,10 @@ const PROVIDERS = [
     service: animeflvService,
   },
   {
-    id: "hentaila",
-    label: "HentaiLA",
-    domains: ["hentaila.com", "www.hentaila.com"],
-    service: hentailaService,
+    id: "hentaila", // Keep id as hentaila so frontend doesn't need to change URL params
+    label: "TioHentai",
+    domains: ["tiohentai.com", "www.tiohentai.com"],
+    service: tiohentaiService,
   },
   {
     id: "tioanime",
@@ -159,6 +159,35 @@ async function getAnimeInfo(urlCandidate) {
   };
 }
 
+async function getPopularAnimes() {
+  const providersToTry = PROVIDERS.filter(p => p.service.getPopularAnimes);
+  const promises = providersToTry.map(p => p.service.getPopularAnimes(p.domains[0]).catch(() => null));
+  const responses = await Promise.all(promises);
+
+  let combined = [];
+  const seenUrls = new Set();
+
+  responses.forEach(response => {
+    if (response && response.success && response.data && response.data.results) {
+      response.data.results.forEach(anime => {
+        if (anime.url && !seenUrls.has(anime.url)) {
+          seenUrls.add(anime.url);
+          combined.push(anime);
+        }
+      });
+    }
+  });
+
+  return {
+    success: true,
+    data: {
+      results: combined,
+      count: combined.length,
+    },
+    source: "popular-combined",
+  };
+}
+
 async function getEpisodeLinks(urlCandidate, includeMega, excludeServers) {
   const provider = findProviderForUrl(urlCandidate) || PROVIDERS[0];
   if (!provider) {
@@ -176,4 +205,5 @@ module.exports = {
   searchAnime,
   getAnimeInfo,
   getEpisodeLinks,
+  getPopularAnimes,
 };

@@ -28,6 +28,14 @@ router.get(
 );
 
 router.get(
+  "/popular",
+  asyncHandler(async (req, res) => {
+    const response = await animeService.getPopularAnimes();
+    res.status(200).json(response);
+  })
+);
+
+router.get(
   "/info",
   asyncHandler(async (req, res) => {
     if (!req.query.url) {

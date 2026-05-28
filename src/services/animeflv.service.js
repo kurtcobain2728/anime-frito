@@ -11,6 +11,7 @@ async function getPuppeteerBrowser() {
     const puppeteer = require("puppeteer");
     puppeteerBrowser = await puppeteer.launch({
       headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
       args: ["--no-sandbox", "--disable-setuid-sandbox"],
     });
   }
@@ -346,6 +347,22 @@ function buildLinkRecord(serverName, url, quality) {
     token: server.token,
     url,
     quality: quality || null,
+  };
+}
+
+async function getPopularAnimes(domainCandidate) {
+  const domain = (domainCandidate || DEFAULT_DOMAIN || "www4.animeflv.net").toString().trim();
+  const url = `https://${domain}/browse?order=rating`;
+  const html = await fetchHtml(url);
+  const results = parseSearchResultsFromHtml(html, domain);
+
+  return {
+    success: true,
+    data: {
+      results: results.slice(0, 20),
+      count: Math.min(results.length, 20),
+    },
+    source: "animeflv-popular",
   };
 }
 
@@ -704,6 +721,7 @@ module.exports = {
   searchAnime,
   getAnimeInfo,
   getEpisodeLinks,
+  getPopularAnimes,
   getPuppeteerBrowser,
   fetchHtmlWithPuppeteer,
 };

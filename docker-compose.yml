@@ -1,0 +1,65 @@
+services:
+  db:
+    image: postgres:15-alpine
+    container_name: animefrito_db
+    restart: always
+    environment:
+      POSTGRES_USER: animefrito_user
+      POSTGRES_PASSWORD: animefrito_password
+      POSTGRES_DB: animefrito_db
+    ports:
+      - "5433:5432"
+    volumes:
+      - animefrito_db_data:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - animefrito_network
+
+  backend:
+    build: .
+    container_name: animefrito_backend
+    restart: always
+    ports:
+      - "3030:3000"
+    depends_on:
+      - db
+    env_file:
+      - .env
+    environment:
+      - DB_HOST=db
+      - DB_USER=animefrito_user
+      - DB_PASSWORD=animefrito_password
+      - DB_NAME=animefrito_db
+      - DB_PORT=5432
+    volumes:
+      - ./downloads:/app/downloads
+    networks:
+      - animefrito_network
+
+  frontend:
+    build: ./frontend
+    container_name: animefrito_frontend
+    restart: always
+    ports:
+      - "8080:80"
+    depends_on:
+      - backend
+    networks:
+      - animefrito_network
+      - dokploy-network
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.animefrito.rule=Host(`animefrito.grasa.engineer`)"
+      - "traefik.http.routers.animefrito.entrypoints=web,websecure"
+      - "traefik.http.routers.animefrito.tls=true"
+      - "traefik.http.routers.animefrito.tls.certresolver=letsencrypt"
+      - "traefik.http.services.animefrito.loadbalancer.server.port=80"
+
+volumes:
+  animefrito_db_data:
+
+networks:
+  animefrito_network:
+    driver: bridge
+  dokploy-network:
+    external: true

@@ -423,6 +423,22 @@ function parseAnimeInfoFromHtml(html, domain) {
   };
 }
 
+async function getPopularAnimes(domainCandidate) {
+  const domain = (domainCandidate || DEFAULT_DOMAIN || "jkanime.net").toString().trim();
+  const url = `https://${domain}/top/`;
+  const html = await fetchHtml(url);
+  const results = parseSearchResultsFromHtml(html, domain);
+
+  return {
+    success: true,
+    data: {
+      results: results.slice(0, 20), // Limitar a 20 para no sobrecargar
+      count: Math.min(results.length, 20),
+    },
+    source: "jkanime-popular",
+  };
+}
+
 function parseEpisodesFromHtml(html, domain, slug) {
   const $ = cheerio.load(html);
   const episodes = [];
@@ -724,4 +740,5 @@ module.exports = {
   searchAnime,
   getAnimeInfo,
   getEpisodeLinks,
+  getPopularAnimes,
 };

@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --bg-base: #100a0d;
+  --bg-overlay: rgba(22, 14, 20, 0.75);
+  --glass-bg: rgba(31, 19, 27, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --card-bg: rgba(45, 27, 38, 0.85);
+  --card-hover: rgba(58, 35, 49, 0.95);
+  --accent-pink: #fadddd;
+  --accent-pink-hover: #ffcdcd;
+  --text-main: #ffffff;
+  --text-muted: #b9a9b2;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: var(--bg-base);
+  color: var(--text-main);
+  overflow-x: hidden;
+  margin: 0;
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(0,0,0,0.2); 
+}
+::-webkit-scrollbar-thumb {
+  background: var(--card-bg); 
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--card-hover); 
+}

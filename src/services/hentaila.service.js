@@ -143,6 +143,45 @@ function resolveNodeObject(nodeData, keys) {
   return result;
 }
 
+let puppeteerBrowser = null;
+
+async function getPuppeteerBrowser() {
+  if (!puppeteerBrowser) {
+    const puppeteer = require("puppeteer");
+    puppeteerBrowser = await puppeteer.launch({
+      headless: true,
+      executablePath: process.env.PUPPETEER_EXECUTABLE_PATH || undefined,
+      args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    });
+  }
+  return puppeteerBrowser;
+}
+
+async function fetchJsonWithPuppeteer(url) {
+  const browser = await getPuppeteerBrowser();
+  const page = await browser.newPage();
+  
+  await page.setUserAgent(HTTP_HEADERS["User-Agent"]);
+  
+  try {
+    await page.goto(url, { waitUntil: "networkidle2", timeout: 20000 });
+    // Hentaila might present a Cloudflare challenge, networkidle2 helps wait for it
+    
+    // Extract JSON from the page body (if it returned JSON directly)
+    const content = await page.evaluate(() => {
+      return document.body.innerText;
+    });
+    
+    try {
+      return JSON.parse(content);
+    } catch (parseError) {
+      throw new Error("Respuesta no es un JSON válido");
+    }
+  } finally {
+    await page.close();
+  }
+}
+
 async function fetchJson(url) {
   try {
     const timeout = Number(process.env.REQUEST_TIMEOUT_MS || 15000);
@@ -154,7 +193,12 @@ async function fetchJson(url) {
     });
     return response.data;
   } catch (error) {
-    throw new ApiError(500, "No se pudo obtener contenido desde HentaiLA", error.message);
+    try {
+      console.log("fetchJson: trying with puppeteer for", url);
+      return await fetchJsonWithPuppeteer(url);
+    } catch (puppeteerError) {
+      throw new ApiError(500, "No se pudo obtener contenido desde HentaiLA", error.message);
+    }
   }
 }
 

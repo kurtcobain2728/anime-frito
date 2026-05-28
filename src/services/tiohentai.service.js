@@ -4,7 +4,7 @@ const vm = require("node:vm");
 const { URL } = require("node:url");
 const { ApiError } = require("../utils/api-error");
 
-const DEFAULT_DOMAIN = "tioanime.com";
+const DEFAULT_DOMAIN = "tiohentai.com";
 
 const HTTP_HEADERS = {
   "User-Agent":
@@ -24,7 +24,7 @@ async function fetchHtml(url) {
     });
     return response.data;
   } catch (error) {
-    throw new ApiError(500, "No se pudo obtener contenido desde TioAnime", error.message);
+    throw new ApiError(500, "No se pudo obtener contenido desde TioHentai", error.message);
   }
 }
 
@@ -168,13 +168,13 @@ async function searchAnime(query, domainCandidate) {
 
   $("article.anime").each((_, element) => {
     const card = $(element);
-    const link = card.find("a[href^='/anime/']").first().attr("href");
+    const link = card.find("a[href^='/hentai/']").first().attr("href");
     const title = card.find("h3.title").first().text().trim();
     const image = card.find("img").first().attr("src");
 
     if (!link || !title) return;
 
-    const slug = link.replace("/anime/", "");
+    const slug = link.replace("/hentai/", "");
     const typeEl = card.find(".anime-type-peli, .anime-type-serie, .anime-type-ova").first();
     const type = typeEl.text().trim() || null;
 
@@ -195,7 +195,7 @@ async function searchAnime(query, domainCandidate) {
   return {
     success: true,
     data: { query: cleanQuery, results, count: results.length },
-    source: "tioanime",
+    source: "tiohentai",
   };
 }
 
@@ -209,13 +209,13 @@ async function getPopularAnimes(domainCandidate) {
 
   $("article.anime").each((_, element) => {
     const card = $(element);
-    const link = card.find("a[href^='/anime/']").first().attr("href");
+    const link = card.find("a[href^='/hentai/']").first().attr("href");
     const title = card.find("h3.title").first().text().trim();
     const image = card.find("img").first().attr("src");
 
     if (!link || !title) return;
 
-    const slug = link.replace("/anime/", "");
+    const slug = link.replace("/hentai/", "");
     const typeEl = card.find(".anime-type-peli, .anime-type-serie, .anime-type-ova").first();
     const type = typeEl.text().trim() || null;
 
@@ -239,7 +239,7 @@ async function getPopularAnimes(domainCandidate) {
       results: results.slice(0, 20),
       count: Math.min(results.length, 20),
     },
-    source: "tioanime-popular",
+    source: "tiohentai-popular",
   };
 }
 
@@ -247,7 +247,7 @@ async function getAnimeInfo(urlCandidate) {
   const slug = slugFromUrl(urlCandidate);
   if (!slug) throw new ApiError(400, "URL invalida");
 
-  const animeUrl = `https://${DEFAULT_DOMAIN}/anime/${slug}`;
+  const animeUrl = `https://${DEFAULT_DOMAIN}/hentai/${slug}`;
   const html = await fetchHtml(animeUrl);
 
   const info = parseAnimeInfoFromHtml(html);
@@ -308,7 +308,7 @@ async function getAnimeInfo(urlCandidate) {
       genres: info.genres || [],
       episodes,
     },
-    source: "tioanime",
+    source: "tiohentai",
   };
 }
 
@@ -368,7 +368,7 @@ async function getEpisodeLinks(urlCandidate) {
         DUB: [],
       },
     },
-    source: "tioanime",
+    source: "tiohentai",
   };
 }
 

@@ -1,0 +1,257 @@
+.anime-details-page {
+  position: relative;
+  width: 100%;
+}
+
+.anime-banner {
+  position: absolute;
+  top: -2rem; left: -2rem; right: -2rem;
+  height: 350px;
+  background-size: cover;
+  background-position: center;
+  z-index: 1;
+}
+
+.banner-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: linear-gradient(to bottom, rgba(16, 10, 13, 0.2), var(--bg-base));
+}
+
+.anime-content-wrapper {
+  position: relative;
+  z-index: 2;
+  margin-top: 150px;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.anime-header {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-end;
+}
+
+.anime-poster {
+  width: 220px;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+  border: 2px solid var(--glass-border);
+}
+
+.anime-info {
+  flex: 1;
+  padding-bottom: 1rem;
+}
+
+.anime-title-main {
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 1rem;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+}
+
+.anime-synopsis {
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 800px;
+}
+
+.anime-meta {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--text-light);
+  font-size: 0.9rem;
+}
+
+.tag-glass {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.2rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.anime-genres {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+}
+
+.genre-tag {
+  background: rgba(232, 62, 140, 0.15);
+  color: var(--accent-pink);
+  border: 1px solid rgba(232, 62, 140, 0.3);
+  padding: 0.3rem 0.8rem;
+  border-radius: 6px;
+  font-size: 0.85rem;
+}
+
+/* Player */
+.player-section {
+  padding: 1.5rem;
+  border-radius: 16px;
+  margin-top: 1rem;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.player-header h3 {
+  color: var(--accent-pink);
+}
+
+.download-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--card-bg);
+  border: 1px solid var(--accent-pink);
+  color: var(--accent-pink);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.download-btn:hover {
+  background: var(--accent-pink);
+  color: #100a0d;
+}
+
+.player-wrapper {
+  position: relative;
+  padding-top: 56.25%; /* 16:9 Aspect Ratio */
+  background: #000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.react-player {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Episodes List */
+.episodes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.episode-card {
+  display: flex;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.episode-card:hover {
+  background: var(--card-hover);
+  transform: translateX(5px);
+}
+
+.episode-card.playing {
+  border-color: var(--accent-pink);
+  background: rgba(250, 221, 221, 0.05);
+}
+
+.ep-thumbnail {
+  width: 120px;
+  height: 68px;
+  background: rgba(0,0,0,0.5);
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--accent-pink);
+}
+
+.ep-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.ep-num {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.ep-title {
+  font-weight: 600;
+  color: var(--text-main);
+}
+
+/* Player Controls - Language & Server */
+.player-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.control-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted, #b9a9b2);
+  flex-wrap: wrap;
+}
+
+.control-label {
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+.control-btn {
+  padding: 0.35rem 0.9rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-main, #e0d0d8);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.control-btn:hover {
+  background: rgba(250, 221, 221, 0.15);
+  border-color: rgba(250, 221, 221, 0.3);
+}
+
+.control-btn-active {
+  background: var(--accent-pink, #fadddd) !important;
+  color: #3a1b28 !important;
+  border-color: var(--accent-pink, #fadddd) !important;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .player-controls {
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+}
